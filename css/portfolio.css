@@ -1,0 +1,1196 @@
+/* ==========================================================================
+   Writing 50 ePortfolio — Design System
+   Theme: Medical Horror
+   Inspired by Morandi color theory, clinical aesthetics, and the body horror
+   of Antiviral & the Imitation Project.
+   Sophie Ren | Dr. Margaret Speer | Spring 2026
+   ========================================================================== */
+
+/* ----- Google Fonts ----- */
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;1,400&display=swap');
+
+/* ==========================================================================
+   Custom Properties — Medical Horror Palette
+   ========================================================================== */
+:root {
+  /* Clean white base */
+  --color-bg: #FFFFFF;
+  --color-bg-alt: #F5F4F2;
+
+  /* Surgical steel blacks */
+  --color-text: #000000;
+  --color-text-muted: #3D3D3D;
+  --color-text-light: #6B6B6B;
+
+  /* Dark medical equipment */
+  --color-primary: #000000;
+  --color-primary-hover: #000000;
+
+  /* Desaturated surgical green — Morandi sage */
+  --color-secondary: #7D8A7D;
+  --color-secondary-hover: #5C6A5C;
+
+  /* Blood red — the only vibrant element. Like Hannah's red lip in Antiviral. */
+  --color-accent: #C41E3A;
+  --color-accent-hover: #9B0E28;
+  --color-accent-glow: rgba(196, 30, 58, 0.12);
+
+  /* Thin clinical borders */
+  --color-border: #D8D6D0;
+  --color-border-light: #E5E3DE;
+
+  /* Sterile white cards */
+  --color-card-bg: #FFFFFF;
+  --color-card-shadow: rgba(0, 0, 0, 0.04);
+
+  /* Frosted nav */
+  --color-nav-bg: rgba(255, 255, 255, 0.94);
+
+  /* Fonts */
+  --font-body: Calibri, 'Carlito', 'Segoe UI', -apple-system, sans-serif;
+  --font-heading: Calibri, 'Carlito', 'Segoe UI', -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', 'Fira Code', 'Courier New', monospace;
+
+  /* Layout */
+  --max-width: 70%;
+  --max-width-wide: 70%;
+
+  /* Spacing */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  --space-3xl: 4rem;
+
+  /* Sharper, more clinical radii */
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 8px;
+
+  /* Subtler shadows — clinical lighting */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.08);
+
+  /* Transitions */
+  --transition-fast: 0.15s ease;
+  --transition-base: 0.25s ease;
+  --transition-slow: 0.5s ease;
+}
+
+/* ==========================================================================
+   Reset & Base
+   ========================================================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.7;
+  color: var(--color-text);
+  background: var(--color-bg);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Subtle background texture — like faintly aged medical paper */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image:
+    radial-gradient(ellipse at 20% 50%, rgba(196, 30, 58, 0.015) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(125, 138, 125, 0.015) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* ==========================================================================
+   Typography
+   ========================================================================== */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--color-primary);
+  margin-bottom: var(--space-md);
+  letter-spacing: -0.01em;
+}
+
+h1 { font-size: 2.75rem; letter-spacing: -0.025em; margin-bottom: var(--space-lg); }
+h2 { font-size: 2rem; letter-spacing: -0.015em; margin-top: var(--space-2xl); }
+h3 { font-size: 1.5rem; margin-top: var(--space-xl); }
+h4 { font-size: 1.25rem; margin-top: var(--space-lg); }
+
+p { margin-bottom: var(--space-md); }
+
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+  transition: color var(--transition-fast), background var(--transition-fast);
+}
+a:hover {
+  color: var(--color-accent-hover);
+  text-decoration: underline;
+  text-decoration-color: var(--color-accent);
+  text-underline-offset: 0.2em;
+}
+
+strong, b {
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+em, i { font-style: italic; }
+
+/* Blockquote — clinical observation note style */
+blockquote {
+  margin: var(--space-lg) 0;
+  padding: var(--space-md) var(--space-lg);
+  border-left: 2px solid var(--color-accent);
+  background: var(--color-bg-alt);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-style: italic;
+  color: var(--color-text-muted);
+  font-size: 0.9375rem;
+}
+blockquote p:last-child { margin-bottom: 0; }
+
+cite {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: 0.8125rem;
+  font-style: normal;
+  color: var(--color-text-light);
+  margin-top: var(--space-sm);
+  letter-spacing: 0.02em;
+}
+
+/* Lists with medical cross markers */
+ul {
+  margin: var(--space-md) 0;
+  padding-left: 0;
+  list-style: none;
+}
+ul li {
+  padding-left: 1.5rem;
+  margin-bottom: var(--space-sm);
+  position: relative;
+}
+ul li::before {
+  content: '+';
+  position: absolute;
+  left: 0;
+  color: var(--color-accent);
+  font-family: var(--font-heading);
+  font-weight: 400;
+  font-size: 0.875rem;
+}
+
+ol {
+  margin: var(--space-md) 0;
+  padding-left: var(--space-xl);
+}
+ol li { margin-bottom: var(--space-sm); }
+
+/* EKG-style horizontal rule */
+hr {
+  border: none;
+  height: 1px;
+  background: var(--color-border);
+  margin: var(--space-2xl) 0;
+  position: relative;
+}
+hr::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 1px;
+  background: var(--color-accent);
+}
+
+code {
+  font-family: var(--font-mono);
+  font-size: 0.8125em;
+  background: var(--color-bg-alt);
+  padding: 0.125em 0.375em;
+  border-radius: 2px;
+  color: var(--color-text-muted);
+}
+
+/* ==========================================================================
+   Navigation Bar — Dark Surgical Steel
+   ========================================================================== */
+.portfolio-nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  background: #1C1C1C;
+  border-bottom: 1px solid #333;
+  z-index: 100;
+  font-family: var(--font-heading);
+}
+
+.nav-inner {
+  max-width: var(--max-width-wide);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-lg);
+  height: 3.25rem;
+}
+
+.nav-brand {
+  font-weight: 700;
+  font-size: 0.9375rem;
+  color: #E5E3DE;
+  text-decoration: none;
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+}
+.nav-brand::before {
+  content: '+ ';
+  color: var(--color-accent);
+  font-weight: 400;
+}
+.nav-brand:hover {
+  text-decoration: none;
+  color: #FFFFFF;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.nav-links li { padding: 0; margin: 0; }
+.nav-links li::before { display: none; }
+
+.nav-links a {
+  display: block;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #8A8780;
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  transition: color var(--transition-fast), background var(--transition-fast);
+  white-space: nowrap;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.nav-links a:hover {
+  color: #E5E3DE;
+  background: rgba(255, 255, 255, 0.06);
+  text-decoration: none;
+}
+.nav-links a.active {
+  color: var(--color-accent);
+  font-weight: 600;
+}
+
+/* Hamburger toggle */
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: none;
+  border: 1px solid #444;
+  cursor: pointer;
+  padding: 0.5rem;
+  gap: 5px;
+  border-radius: var(--radius-sm);
+  transition: border-color var(--transition-fast);
+}
+.nav-toggle:hover { border-color: #888; }
+.nav-toggle span {
+  display: block;
+  width: 18px;
+  height: 1.5px;
+  background: #8A8780;
+  border-radius: 1px;
+  transition: transform var(--transition-base), opacity var(--transition-base);
+}
+.nav-toggle.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); background: var(--color-accent); }
+.nav-toggle.open span:nth-child(2) { opacity: 0; }
+.nav-toggle.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); background: var(--color-accent); }
+
+/* ==========================================================================
+   Layout
+   ========================================================================== */
+.page-wrapper { padding-top: 3.25rem; }
+
+.content-container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: var(--space-2xl) var(--space-lg) var(--space-3xl);
+}
+
+.content-container-wide {
+  max-width: var(--max-width-wide);
+  margin: 0 auto;
+  padding: var(--space-2xl) var(--space-lg) var(--space-3xl);
+}
+
+/* ==========================================================================
+   Landing Page — NYT-Style Feature Hero (Split Panel)
+   ========================================================================== */
+.hero-feature {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Fade-out at bottom of each panel — subtle blend into page below */
+.hero-feature-left::after,
+.hero-feature-right::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  pointer-events: none;
+  z-index: 2;
+}
+.hero-feature-left::after {
+  background: linear-gradient(to bottom, rgba(28,28,28,0) 0%, rgba(28,28,28,0.6) 100%);
+}
+.hero-feature-right::after {
+  background: linear-gradient(to bottom, rgba(245,244,242,0) 0%, rgba(245,244,242,0.6) 100%);
+}
+
+/* Scroll-down arrow indicator */
+.hero-feature::before {
+  content: '';
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  z-index: 3;
+  width: 28px;
+  height: 28px;
+  border-right: 2px solid var(--color-accent);
+  border-bottom: 2px solid var(--color-accent);
+  transform: translateX(-50%) rotate(45deg);
+  animation: scroll-arrow 2s ease-in-out infinite;
+}
+@keyframes scroll-arrow {
+  0%, 100% { opacity: 0.35; transform: translateX(-50%) rotate(45deg) translateY(0); }
+  50% { opacity: 1; transform: translateX(-50%) rotate(45deg) translateY(8px); }
+}
+
+/* Left column — dark panel: portrait + identity */
+.hero-feature-left {
+  background: #1C1C1C;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--space-3xl) var(--space-xl);
+  position: relative;
+}
+
+.hero-feature-pfp {
+  display: block;
+  width: 300px;
+  height: 300px;
+  border-radius: var(--radius-sm);
+  object-fit: cover;
+  margin-bottom: var(--space-xl);
+  filter: grayscale(0.3) brightness(0.95);
+  transition: filter var(--transition-slow);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+.hero-feature-pfp:hover {
+  filter: grayscale(0) brightness(1);
+}
+
+.hero-feature-name {
+  font-size: 2.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: var(--space-xs);
+  color: #F5F4F2;
+  line-height: 1.15;
+}
+
+.hero-feature-course {
+  font-family: var(--font-heading);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 0.15rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.hero-feature-meta {
+  font-family: var(--font-heading);
+  font-size: 0.8125rem;
+  color: rgba(255, 255, 255, 0.4);
+  letter-spacing: 0.04em;
+}
+
+/* Right column — intro text on warm paper */
+.hero-feature-right {
+  background: var(--color-bg-alt);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--space-3xl) var(--space-3xl);
+  position: relative;
+}
+
+.hero-feature-right p {
+  font-size: 1.2rem;
+  line-height: 1.8;
+  color: var(--color-text);
+  margin-bottom: var(--space-lg);
+  max-width: 560px;
+}
+.hero-feature-right p:first-child::first-letter {
+  float: left;
+  font-family: var(--font-heading);
+  font-size: 4.5rem;
+  font-weight: 700;
+  line-height: 0.8;
+  color: var(--color-accent);
+  padding-right: 0.35rem;
+  padding-top: 0.18rem;
+}
+.hero-feature-right p:last-child {
+  margin-bottom: 0;
+}
+
+/* ==========================================================================
+   Scroll Reveal — fade up into view (NYT style)
+   ========================================================================== */
+.reveal {
+  opacity: 0;
+  transform: translateY(48px);
+  transition: opacity 0.75s ease-out, transform 0.75s ease-out;
+}
+.reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger within a container */
+.reveal-stagger > .reveal:nth-child(1) { transition-delay: 0s; }
+.reveal-stagger > .reveal:nth-child(2) { transition-delay: 0.12s; }
+.reveal-stagger > .reveal:nth-child(3) { transition-delay: 0.24s; }
+.reveal-stagger > .reveal:nth-child(4) { transition-delay: 0.36s; }
+.reveal-stagger > .reveal:nth-child(5) { transition-delay: 0.48s; }
+.reveal-stagger > .reveal:nth-child(6) { transition-delay: 0.60s; }
+
+/* ==========================================================================
+   Card Grid (Landing Page) — Clinical Specimen Cards
+   ========================================================================== */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  margin-top: var(--space-lg);
+  background: var(--color-border);
+  border: 1px solid var(--color-border);
+}
+
+.card {
+  background: var(--color-card-bg);
+  padding: var(--space-xl) var(--space-lg);
+  text-decoration: none;
+  color: var(--color-text);
+  transition: background var(--transition-base), box-shadow var(--transition-base);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+.card:hover {
+  background: #FFF;
+  box-shadow: inset 0 0 0 1px var(--color-accent);
+  text-decoration: none;
+  color: var(--color-text);
+  z-index: 1;
+}
+
+.card-number {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-accent);
+  margin-bottom: var(--space-sm);
+}
+
+.card h3 {
+  font-size: 1.125rem;
+  margin: 0 0 var(--space-sm) 0;
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.card p {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+  margin: 0;
+  flex: 1;
+}
+
+.card .card-link-text {
+  font-family: var(--font-heading);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-accent);
+  margin-top: var(--space-md);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.card .card-link-text::after {
+  content: '⟶';
+  transition: transform var(--transition-fast);
+}
+.card:hover .card-link-text::after {
+  transform: translateX(3px);
+}
+
+/* ==========================================================================
+   Page Title Area
+   ========================================================================== */
+.page-title-area {
+  text-align: center;
+  margin-bottom: var(--space-3xl);
+  padding-bottom: var(--space-xl);
+}
+
+.page-title-area .section-label {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-accent);
+  margin-bottom: var(--space-sm);
+}
+
+.page-title-area h1 {
+  font-size: 3.25rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  margin-bottom: var(--space-sm);
+  color: var(--color-primary);
+}
+
+.page-title-area .title-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin: var(--space-lg) auto;
+}
+
+.page-title-area .title-divider::before,
+.page-title-area .title-divider::after {
+  content: '';
+  width: 48px;
+  height: 1px;
+  background: var(--color-border);
+}
+
+.page-title-area .title-divider .cross {
+  position: relative;
+  width: 10px;
+  height: 10px;
+}
+
+.page-title-area .title-divider .cross::before,
+.page-title-area .title-divider .cross::after {
+  content: '';
+  position: absolute;
+  background: var(--color-accent);
+}
+
+.page-title-area .title-divider .cross::before {
+  width: 100%;
+  height: 1.5px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.page-title-area .title-divider .cross::after {
+  width: 1.5px;
+  height: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.page-byline {
+  font-family: var(--font-heading);
+  font-size: 0.9375rem;
+  color: var(--color-text-muted);
+  letter-spacing: 0.02em;
+}
+
+.page-byline span {
+  color: var(--color-text-light);
+}
+
+.page-title-area .title-tagline {
+  font-size: 1rem;
+  font-style: italic;
+  color: var(--color-text-muted);
+  max-width: 460px;
+  margin: var(--space-md) auto 0;
+  line-height: 1.6;
+}
+
+.header-illustration {
+  max-width: 400px;
+  margin: var(--space-xl) auto 0;
+}
+
+.header-illustration svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ==========================================================================
+   Essay/Content Styling
+   ========================================================================== */
+.essay-body h2 {
+  font-size: 2rem;
+  margin-top: var(--space-3xl);
+  padding-top: var(--space-xl);
+  border-top: 1px solid var(--color-border);
+  font-weight: 700;
+}
+
+.essay-body h3 { font-size: 1.125rem; }
+
+.essay-body p {
+  text-align: justify;
+  hyphens: auto;
+}
+
+/* Pull quote — like a medical chart annotation */
+.pull-quote {
+  float: right;
+  width: 240px;
+  margin: var(--space-md) 0 var(--space-md) var(--space-lg);
+  padding: var(--space-md) var(--space-lg);
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.45;
+  color: var(--color-accent);
+  border-left: 2px solid var(--color-accent);
+  background: var(--color-bg-alt);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-style: italic;
+}
+
+/* Side image — floats beside text like a pull quote */
+.side-image {
+  float: right;
+  width: 340px;
+  margin: var(--space-md) 0 var(--space-md) var(--space-lg);
+  padding: var(--space-md);
+}
+
+.side-image img {
+  width: 100%;
+  display: block;
+  filter: saturate(0.85);
+  transition: filter var(--transition-slow);
+}
+
+.side-image img:hover {
+  filter: saturate(1);
+}
+
+.side-image figcaption {
+  margin-top: var(--space-xs);
+  font-size: 0.6875rem;
+}
+
+/* ==========================================================================
+   Figures & Images — Specimen Display
+   ========================================================================== */
+figure {
+  margin: var(--space-xl) 0;
+}
+
+figure img {
+  width: 100%;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  display: block;
+  filter: saturate(0.85);
+  transition: filter var(--transition-slow);
+}
+figure img:hover {
+  filter: saturate(1);
+}
+
+figcaption {
+  font-family: var(--font-heading);
+  font-size: 0.8125rem;
+  color: var(--color-text-light);
+  margin-top: var(--space-sm);
+  text-align: center;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+}
+
+.figure-small-caption {
+  max-width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.figure-small-caption img {
+  width: 100%;
+}
+
+/* Sidenote — like a margin note */
+.sidenote {
+  background: var(--color-bg-alt);
+  padding: var(--space-md) var(--space-lg);
+  margin: var(--space-lg) 0;
+  font-family: var(--font-heading);
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+
+.sidenote a {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+.sidenote a:hover {
+  text-decoration: underline;
+}
+
+
+/* Side-by-side comparison — before/after specimen slides */
+.comparison-widget {
+  background: var(--color-card-bg);
+  margin: var(--space-xl) 0;
+  overflow: hidden;
+}
+
+.comparison-widget-header {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-accent);
+  padding: var(--space-md) var(--space-lg);
+  background: var(--color-bg-alt);
+}
+
+.comparison-widget-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.comparison-widget-body figure {
+  margin: 0;
+  padding: var(--space-lg);
+}
+
+.comparison-widget-body figure img {
+  width: 100%;
+  display: block;
+  filter: saturate(0.85);
+  transition: filter var(--transition-slow);
+}
+
+.comparison-widget-body figure img:hover {
+  filter: saturate(1);
+}
+
+.comparison-widget-body figcaption {
+  margin-top: var(--space-sm);
+}
+
+@media (max-width: 768px) {
+  .comparison-widget-body {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   Works Cited — Clinical Reference List
+   ========================================================================== */
+.works-cited {
+  margin-top: var(--space-3xl);
+  padding-top: var(--space-xl);
+  border-top: 1px solid var(--color-border);
+}
+
+.works-cited h2 {
+  font-size: 1.25rem;
+  margin-top: 0;
+  margin-bottom: var(--space-lg);
+  text-align: center;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.works-cited .citation-entry {
+  padding-left: 2rem;
+  text-indent: -2rem;
+  margin-bottom: var(--space-md);
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--color-text);
+}
+
+/* ==========================================================================
+   Callout / Clinical Observation Notes
+   ========================================================================== */
+.callout {
+  background: #F9F7F3;
+  border: 1px solid #D8D3C5;
+  border-left: 2px solid #A89870;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: var(--space-lg);
+  margin-bottom: var(--space-xl);
+  font-family: var(--font-heading);
+  font-size: 0.875rem;
+  color: #5C5540;
+  line-height: 1.6;
+}
+.callout strong { color: #4A4028; }
+.callout ol, .callout ul { margin: var(--space-sm) 0 0 0; padding-left: var(--space-lg); }
+.callout li { margin-bottom: var(--space-xs); }
+.callout a { color: var(--color-accent); }
+
+/* ==========================================================================
+   Archive-Specific Styles — Specimen Collection
+   ========================================================================== */
+.archive-topic-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  margin-top: var(--space-xl);
+  background: var(--color-border);
+  border: 1px solid var(--color-border);
+}
+
+.archive-topic-card {
+  background: var(--color-card-bg);
+  padding: var(--space-xl);
+  transition: background var(--transition-base);
+}
+.archive-topic-card:hover { background: #FFF; }
+
+.archive-topic-card h3 {
+  margin: 0 0 var(--space-sm) 0;
+  font-size: 1.0625rem;
+  font-weight: 600;
+}
+
+.archive-topic-card p {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  margin: 0 0 var(--space-md) 0;
+}
+
+.archive-topic-card .topic-status {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.25rem 0.5rem;
+  border-radius: 2px;
+  background: var(--color-bg-alt);
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border);
+}
+
+/* Artifact entry — specimen slide */
+.artifact {
+  margin-bottom: var(--space-2xl);
+  padding-bottom: var(--space-xl);
+  border-bottom: 1px solid var(--color-border-light);
+}
+.artifact:last-child { border-bottom: none; }
+
+.artifact h3 {
+  font-size: 1.125rem;
+  margin-top: 0;
+  margin-bottom: var(--space-sm);
+  color: var(--color-primary);
+}
+
+.artifact-display {
+  background: var(--color-bg-alt);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-lg);
+  margin: var(--space-md) 0;
+  overflow-x: auto;
+}
+.artifact-display img {
+  max-width: 100%;
+  border-radius: 2px;
+  display: block;
+  filter: saturate(0.85);
+}
+.artifact-display pre {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  color: var(--color-text);
+}
+
+.artifact-display-caption {
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+  margin-top: var(--space-sm);
+}
+
+.artifact-caption {
+  font-size: 1.125rem;
+  color: var(--color-text-muted);
+  line-height: 1.7;
+  margin-top: var(--space-sm);
+}
+
+.artifact-label {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-accent);
+  margin-bottom: var(--space-xs);
+}
+
+/* ==========================================================================
+   Template Placeholder — Sterile Note
+   ========================================================================== */
+.template-placeholder {
+  background: #FBFAF6;
+  border: 1px dashed #C8C4B8;
+  border-radius: var(--radius-sm);
+  padding: var(--space-lg);
+  margin-bottom: var(--space-lg);
+  font-family: var(--font-heading);
+  font-size: 0.8125rem;
+  color: #8A8060;
+  text-align: center;
+  letter-spacing: 0.02em;
+}
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+.portfolio-footer {
+  text-align: center;
+  padding: var(--space-2xl) var(--space-lg);
+  border-top: 1px solid var(--color-border-light);
+  font-family: var(--font-heading);
+  font-size: 0.8125rem;
+  color: var(--color-text-light);
+  margin-top: var(--space-3xl);
+  letter-spacing: 0.03em;
+  background: var(--color-bg-alt);
+}
+.portfolio-footer p { margin-bottom: var(--space-xs); }
+
+/* ==========================================================================
+   Responsive — Tablet (≤1024px)
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .card-grid,
+  .archive-topic-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pull-quote {
+    float: none;
+    width: 100%;
+    margin: var(--space-lg) 0;
+  }
+
+  .nav-links a {
+    font-size: 0.6875rem;
+    padding: 0.375rem 0.5rem;
+  }
+}
+
+/* ==========================================================================
+   Responsive — Mobile (≤768px)
+   ========================================================================== */
+@media (max-width: 768px) {
+  :root { --max-width: 100%; }
+
+  body { font-size: 1rem; }
+  h1 { font-size: 1.75rem; }
+  h2 { font-size: 1.375rem; }
+  h3 { font-size: 1.125rem; }
+
+  .hero-feature {
+    grid-template-columns: 1fr;
+    height: auto;
+    min-height: 100vh;
+  }
+  .hero-feature-left {
+    padding: var(--space-2xl) var(--space-lg);
+  }
+  .hero-feature-right {
+    padding: var(--space-2xl) var(--space-lg);
+  }
+  .hero-feature-pfp {
+    width: 200px;
+    height: 200px;
+  }
+  .hero-feature-name { font-size: 2rem; }
+  .hero-feature-right p {
+    font-size: 1.05rem;
+    max-width: 100%;
+  }
+
+  .nav-toggle { display: flex; }
+
+  .nav-links {
+    position: fixed;
+    top: 3.25rem; left: 0; right: 0; bottom: 0;
+    background: #1A1A1A;
+    flex-direction: column;
+    align-items: stretch;
+    padding: var(--space-md);
+    gap: 0;
+    transform: translateX(100%);
+    transition: transform var(--transition-base);
+    overflow-y: auto;
+    z-index: 99;
+  }
+  .nav-links.open { transform: translateX(0); }
+  .nav-links a {
+    padding: var(--space-md);
+    font-size: 0.875rem;
+    border-radius: var(--radius-sm);
+    border-bottom: 1px solid #333;
+  }
+
+  .content-container,
+  .content-container-wide {
+    padding: var(--space-lg) var(--space-md) var(--space-2xl);
+  }
+
+  .essay-body p {
+    text-align: left;
+    hyphens: none;
+  }
+
+  .hero-pfp { width: 110px; height: 110px; }
+  .hero .hero-tagline { max-width: 100%; font-size: 1rem; }
+  .card { padding: var(--space-lg); }
+  .page-title-area h1 { font-size: 1.625rem; }
+}
+
+/* ==========================================================================
+   Responsive — Small Mobile (≤480px)
+   ========================================================================== */
+@media (max-width: 480px) {
+  .hero-feature-left {
+    padding: var(--space-xl) var(--space-md);
+  }
+  .hero-feature-right {
+    padding: var(--space-xl) var(--space-md);
+  }
+  .hero-feature-pfp {
+    width: 160px;
+    height: 160px;
+  }
+  .hero-feature-name { font-size: 1.625rem; }
+  .hero-feature-course { font-size: 0.75rem; }
+  .hero-feature-right p { font-size: 1rem; }
+
+  .content-container,
+  .content-container-wide {
+    padding: var(--space-lg) var(--space-sm) var(--space-xl);
+  }
+
+  .card h3 { font-size: 1rem; }
+}
+
+/* ==========================================================================
+   Print Styles
+   ========================================================================== */
+@media print {
+  :root {
+    --color-bg: #fff;
+    --color-text: #000;
+    --color-primary: #000;
+    --color-accent: #000;
+    --color-text-muted: #333;
+    --color-border: #999;
+  }
+
+  .portfolio-nav,
+  .nav-toggle,
+  .portfolio-footer,
+  .callout,
+  body::before { display: none; }
+
+  .page-wrapper { padding-top: 0; }
+  body { font-size: 11pt; line-height: 1.6; }
+  h1 { font-size: 18pt; }
+  h2 { font-size: 14pt; }
+  h3 { font-size: 12pt; }
+  a { color: #000; text-decoration: underline; }
+  .card-grid, .archive-topic-grid { grid-template-columns: 1fr; gap: 0; background: none; border: none; }
+  .card, .archive-topic-card { border: 1px solid #ccc; margin-bottom: 0.5em; }
+  .pull-quote { float: none; width: 100%; margin: 1em 0; border-left: 1px solid #000; }
+  .page-title-area { border-bottom: 1px solid #000; }
+  .works-cited { page-break-before: always; }
+  figure img { filter: none; }
+  .artifact-display img { filter: none; }
+
+  @page { margin: 1in; }
+}
