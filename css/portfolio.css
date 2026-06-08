@@ -337,6 +337,52 @@ code {
 .nav-toggle.open span:nth-child(2) { opacity: 0; }
 .nav-toggle.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); background: var(--color-accent); }
 
+/* ---- Dropdown / popout menus ---- */
+.nav-dropdown {
+  position: relative;
+}
+
+.nav-dropdown > a {
+  cursor: default;
+}
+
+.nav-dropdown-content {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: #1C1C1C;
+  border: 1px solid #333;
+  border-radius: var(--radius-sm);
+  min-width: 200px;
+  padding: var(--space-xs) 0;
+  z-index: 200;
+  flex-direction: column;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+}
+
+.nav-dropdown:hover .nav-dropdown-content {
+  display: flex;
+}
+
+.nav-dropdown-content a {
+  padding: 0.5rem 1rem;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  color: #8A8780;
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  white-space: nowrap;
+  transition: color var(--transition-fast), background var(--transition-fast);
+}
+
+.nav-dropdown-content a:hover {
+  color: #E5E3DE;
+  background: rgba(255,255,255,0.06);
+  text-decoration: none;
+}
+
 /* ==========================================================================
    Layout
    ========================================================================== */
@@ -475,15 +521,13 @@ code {
   margin-bottom: var(--space-lg);
   max-width: 560px;
 }
-.hero-feature-right p:first-child::first-letter {
-  float: left;
+.hero-dropcap {
   font-family: var(--font-heading);
   font-size: 4.5rem;
   font-weight: 700;
   line-height: 0.8;
   color: var(--color-accent);
   padding-right: 0.35rem;
-  padding-top: 0.18rem;
 }
 .hero-feature-right p:last-child {
   margin-bottom: 0;
@@ -1115,6 +1159,26 @@ figcaption {
     font-size: 0.875rem;
     border-radius: var(--radius-sm);
     border-bottom: 1px solid #333;
+  }
+
+  /* Dropdown on mobile — always visible when nav is open */
+  .nav-dropdown-content {
+    position: static;
+    display: none;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    min-width: 0;
+  }
+  .nav-links.open .nav-dropdown-content,
+  .nav-dropdown.open > .nav-dropdown-content {
+    display: flex;
+  }
+  .nav-dropdown-content a {
+    padding-left: 2rem;
+    font-size: 0.8125rem;
+    border-bottom: 1px solid #2A2A2A;
   }
 
   .content-container,
